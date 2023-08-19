@@ -1,0 +1,39 @@
+name: Cypress Tests
+
+on:
+  pull_request:
+    paths:
+      - 'cypress/e2e/**'
+
+jobs:
+  cypress:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14' # You can change the Node.js version if needed
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Determine modified files
+        id: modified_files
+        run: |
+          # Get a list of modified files in the current pull request
+          MODIFIED_FILES=$(git diff --name-only ${{ github.base_ref }}...${{ github.head_ref }} -- 'cypress/e2e/' || true)
+          echo "::set-output name=modified_files::$MODIFIED_FILES"
+
+      - name: Run Cypress Tests
+        run: |
+          # Run Cypress tests only for the modified files
+          MODIFIED_FILES="${{ steps.modified_files.outputs.modified_files }}"
+          if [ -n "$MODIFIED_FILES" ]; then
+            npm run cypress:run --spec "$MODIFIED_FILES"
+          else
+            echo "No modified Cypress tests found."
+          fi
