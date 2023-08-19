@@ -23,6 +23,6 @@ jobs:
           echo $TESTS_PATHS
 
       - name: Print modified files
-        id: modified_files
+        id: asdf
         run: |
           echo $TESTS_PATHS
