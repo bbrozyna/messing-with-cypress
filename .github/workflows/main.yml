@@ -13,18 +13,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14' # You can change the Node.js version if needed
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Determine modified files
-        id: modified_files
         run: |
           CHANGED_SPECS=$(git diff --name-only origin/${{ github.base_ref }} origin/${{ github.head_ref }})
           echo $CHANGED_SPECS
-
