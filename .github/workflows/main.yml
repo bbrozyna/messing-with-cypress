@@ -20,4 +20,5 @@ jobs:
           echo `git ls-remote`
           echo Costam
           git ls-remote
-          git log
+          echo inny
+          git show HEAD
