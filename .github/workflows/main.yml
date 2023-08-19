@@ -27,4 +27,3 @@ jobs:
         id: asdf
         run: |
           echo $test_paths
-          $GITHUB_ENV
