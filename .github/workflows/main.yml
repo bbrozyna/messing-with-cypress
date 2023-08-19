@@ -25,7 +25,6 @@ jobs:
       - name: Determine modified files
         id: modified_files
         run: |
-          echo Hello world from $GITHUB_BASE_REF!
-          echo Hello world from $GITHUB_HEAD_REF!
-          CHANGED=`git diff --name-status origin/$GITHUB_BASE_REF origin/$GITHUB_HEAD_REF -- cypress/e2e`
-          echo $CHANGED
+          CHANGED_SPECS=$(git diff --name-only origin/${{ github.base_ref }} origin/${{ github.head_ref }})
+          echo $CHANGED_SPECS
+
