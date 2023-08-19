@@ -18,5 +18,6 @@ jobs:
         id: modified_files
         run: |
           git fetch --no-tags --depth=1 origin ${{ github.base_ref }}
-          ADDED_MODIFIED_TESTS=`git diff --name-status origin/$GITHUB_BASE_REF HEAD -- cypress/e2e | grep -E '^[AM]'`
-          TESTS_PATHS=`$ADDED_MODIFIED_TESTS | cut -f2 | tr "\n" "," | sed 's/.$//'``
+          ADDED_MODIFIED_TESTS=$(git diff --name-status origin/$GITHUB_BASE_REF HEAD -- cypress/e2e | grep -E '^[AM]' | cut -f2)
+          TESTS_PATHS=$(echo "$ADDED_MODIFIED_TESTS" | tr "\n" "," | sed 's/.$//')
+          echo $TESTS_PATHS
