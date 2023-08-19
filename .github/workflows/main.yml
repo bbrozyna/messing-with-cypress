@@ -21,3 +21,8 @@ jobs:
           ADDED_MODIFIED_TESTS=$(git diff --name-status origin/$GITHUB_BASE_REF HEAD -- cypress/e2e | grep -E '^[AM]' | cut -f2)
           TESTS_PATHS=$(echo "$ADDED_MODIFIED_TESTS" | tr "\n" "," | sed 's/.$//')
           echo $TESTS_PATHS
+
+      - name: Print modified files
+        id: modified_files
+        run: |
+          echo $TESTS_PATHS
