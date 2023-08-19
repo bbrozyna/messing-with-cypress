@@ -27,5 +27,5 @@ jobs:
         run: |
           echo Hello world from $GITHUB_BASE_REF!
           echo Hello world from $GITHUB_HEAD_REF!
-          CHANGED=`git diff --name-status $GITHUB_BASE_REF...$GITHUB_HEAD_REF | grep -E '^[AM]'`
+          CHANGED=`git diff --name-status origin/$GITHUB_BASE_REF...origin/$GITHUB_HEAD_REF | grep -E '^[AM]'`
           echo $CHANGED
