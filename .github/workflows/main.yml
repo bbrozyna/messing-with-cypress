@@ -18,4 +18,5 @@ jobs:
         id: modified_files
         run: |
           git fetch --no-tags --depth=1 origin ${{ github.base_ref }}
-          git diff --name-status a76ff8177dbb8b87c67ae27c2c401288f434c293
+          CHANGED=`git diff --name-status origin/$GITHUB_BASE_REF origin/$GITHUB_HEAD_REF -- cypress/e2e | grep -E '^[AM]'`
+          echo $CHANGED
