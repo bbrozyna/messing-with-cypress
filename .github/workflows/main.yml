@@ -17,8 +17,4 @@ jobs:
       - name: Determine modified files
         id: modified_files
         run: |
-          echo `git ls-remote`
-          echo Costam
-          git ls-remote
-          echo inny
-          git show HEAD
+          git diff --name-status a76ff8177dbb8b87c67ae27c2c401288f434c293
