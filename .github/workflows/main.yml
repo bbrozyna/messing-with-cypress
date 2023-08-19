@@ -20,5 +20,4 @@ jobs:
           echo `git ls-remote`
           echo Costam
           git ls-remote
-          CHANGED=`git diff --name-status origin/$GITHUB_BASE_REF origin/$GITHUB_HEAD_REF -- cypress/e2e | grep -E '^[AM]'`
-          echo $CHANGED
+          git log
