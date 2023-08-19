@@ -13,6 +13,7 @@ context('Assertions', () => {
         .should('have.class', 'success')
         .find('td')
         .first()
+        //
         // checking the text of the <td> element in various ways
         .should('have.text', 'Column content')
         .should('contain', 'Column content')
