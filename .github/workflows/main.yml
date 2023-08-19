@@ -12,7 +12,13 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Determine modified files
+        id: modified_files
         run: |
-          CHANGED_SPECS=$(git diff --name-only origin/${{ github.base_ref }} origin/${{ github.head_ref }})
-          echo $CHANGED_SPECS
+          echo `git ls-remote`
+          echo Costam
+          git ls-remote
