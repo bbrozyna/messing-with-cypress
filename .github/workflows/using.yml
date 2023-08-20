@@ -5,30 +5,26 @@ on:
   push:
     branches: [ main ]
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
-
 jobs:
+  modified:
+    runs-on: ubuntu-latest
+    outputs:
+      output1: ${{ steps.modified_files.outputs.test_paths }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Determine modified files
+        id: modified_files
+        run: |
+          git fetch --no-tags --depth=1 origin ${{ github.base_ref }}
+          ADDED_MODIFIED_TESTS=$(git diff --name-status origin/$GITHUB_BASE_REF HEAD -- cypress/e2e | grep -E '^[AM]' | cut -f2)
+          TESTS_PATHS=$(echo "$ADDED_MODIFIED_TESTS" | tr "\n" "," | sed 's/.$//')
+          echo "test_paths=$TESTS_PATHS" >> $GITHUB_OUTPUT
   run-cypress:
     uses: ./.github/workflows/reusable.yml
+    needs: modified
     with:
-      spec-path: "cypress/e2e/ci-test-example/**"
+      spec-path: ${{ needs.modified.outputs.test_paths }}
     secrets: inherit
-  deploy:
-    needs: run-cypress
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Setup Pages
-        uses: actions/configure-pages@v3
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v2
+
