@@ -15,4 +15,4 @@ jobs:
       id: asdf
       run: |
         echo Okon
-        echo ${{ inputs.config-path }}
+        echo ${{ inputs.spec-path }}
