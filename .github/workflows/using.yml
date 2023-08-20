@@ -29,3 +29,15 @@ jobs:
       - env:
           OUTPUT1: ${{needs.modified.outputs.output1}}
         run: echo "CHUJ $OUTPUT1 $OUTPUT2"
+
+  job3:
+    runs-on: ubuntu-latest
+    needs: modified
+    steps:
+      - name: Run Modified Tests
+        uses: cypress-io/github-action@v5
+        with:
+          spec: ${{needs.modified.outputs.output1}}
+
+
+  
