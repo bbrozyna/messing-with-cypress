@@ -19,6 +19,7 @@ jobs:
     uses: ./.github/workflows/reusable.yml
     with:
       spec-path: "cypress/e2e/ci-test-example/**"
+    secrets: inherit
   deploy:
     needs: run-cypress
     environment:
