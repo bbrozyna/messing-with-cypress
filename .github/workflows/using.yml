@@ -22,24 +22,9 @@ jobs:
           TESTS_PATHS=$(echo "$ADDED_MODIFIED_TESTS" | tr "\n" "," | sed 's/.$//')
           echo "test_paths=$TESTS_PATHS" >> $GITHUB_OUTPUT
           echo "$TESTS_PATHS"
-  job2:
-    runs-on: ubuntu-latest
-    needs: modified
-    steps:
-      - env:
-          OUTPUT1: ${{needs.modified.outputs.output1}}
-        run: echo "CHUJ $OUTPUT1 $OUTPUT2"
 
-  job3:
-    runs-on: ubuntu-latest
-    needs: modified
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-      - name: Run Modified Tests
-        uses: cypress-io/github-action@v5
-        with:
-          spec: ${{needs.modified.outputs.output1}}
-
-
-  
+  run-cypress:
+    uses: ./.github/workflows/reusable.yml
+    with:
+      spec-path: ${{needs.modified.outputs.output1}}
+    secrets: inherit
