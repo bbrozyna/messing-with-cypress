@@ -1,7 +1,9 @@
-name: Deploy static content to Pages
+name: Test reusable workflow
 
 on:
-  pull_request:
+  pull_request:  
+  push:
+    branches: [ main ]
 
 jobs:
   call-workflow-passing-data:
