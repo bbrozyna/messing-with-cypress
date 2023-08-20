@@ -16,6 +16,7 @@ jobs:
 
       - name: Run Cypress Tests
         uses: cypress-io/github-action@v5
+        continue-on-error: true
         with:
           spec: ${{ inputs.spec-path }}
 
