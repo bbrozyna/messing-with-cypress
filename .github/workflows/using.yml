@@ -7,6 +7,6 @@ on:
 
 jobs:
   call-workflow-passing-data:
-    uses: bbrozyna/messing-with-cypress/.github/workflows/reusable.yml
+    uses: ./.github/workflows/reusable.yml
     with:
       config-path: okonokonoknon
