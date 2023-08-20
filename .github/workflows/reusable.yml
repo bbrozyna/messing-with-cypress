@@ -1,0 +1,19 @@
+name: Run Cypress and upload artifacts
+
+on:
+  workflow_call:
+    inputs:
+      config-path:
+        required: true
+        type: string
+
+jobs:
+  reusable_workflow_job:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+    - name: Print modified files
+      id: asdf
+      run: |
+        echo Okon
+        echo ${{ inputs.config-path }}

@@ -1,0 +1,10 @@
+name: Deploy static content to Pages
+
+on:
+  pull_request:
+
+jobs:
+  call-workflow-passing-data:
+    uses: bbrozyna/messing-with-cypress/.github/workflows/reusable.yml
+    with:
+      config-path: okonokonoknon
