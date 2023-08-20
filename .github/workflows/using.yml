@@ -9,7 +9,7 @@ jobs:
   modified:
     runs-on: ubuntu-latest
     outputs:
-      output1: ${{ steps.modified_files.outputs.firstword }}
+      output1: ${{ steps.modified_files.outputs.test_paths }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -28,4 +28,4 @@ jobs:
     steps:
       - env:
           OUTPUT1: ${{needs.modified.outputs.output1}}
-        run: echo "$OUTPUT1 $OUTPUT2"
+        run: echo "CHUJ $OUTPUT1 $OUTPUT2"
