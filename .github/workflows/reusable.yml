@@ -3,14 +3,13 @@ name: Run Cypress and upload artifacts
 on:
   workflow_call:
     inputs:
-      config-path:
+      spec-path:
         required: true
         type: string
 
 jobs:
   reusable_workflow_job:
     runs-on: ubuntu-latest
-    environment: production
     steps:
     - name: Print modified files
       id: asdf
