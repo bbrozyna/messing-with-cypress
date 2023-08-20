@@ -11,8 +11,21 @@ jobs:
   reusable_workflow_job:
     runs-on: ubuntu-latest
     steps:
-    - name: Print modified files
-      id: asdf
-      run: |
-        echo Okon
-        echo ${{ inputs.spec-path }}
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Run Cypress Tests
+        uses: cypress-io/github-action@v5
+        with:
+          spec: ${{ inputs.spec-path }}
+
+      - name: Generate Mocha
+        run: |
+          npm run-script report:merge
+          npm run-script report:generate
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          # Upload entire repository
+          path: 'public'
