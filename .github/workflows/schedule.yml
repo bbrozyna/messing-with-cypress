@@ -1,5 +1,6 @@
 name: example-cron
 on:
+  repository_dispatch:
   schedule:
     # runs tests every day at 4am
     - cron: '0 10 * * *'
