@@ -1,14 +1,15 @@
-name: Cypress Tests
+name: Launch Modified Tests
 
 on:
+  pull_request:  
   push:
-    branches: [ okon ]
-
+    branches: [ main ]
 
 jobs:
-  cypress:
+  modified:
     runs-on: ubuntu-latest
-
+    outputs:
+      specs: ${{ steps.modified_files.outputs.test_paths }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -19,17 +20,12 @@ jobs:
           git fetch --no-tags --depth=1 origin ${{ github.base_ref }}
           ADDED_MODIFIED_TESTS=$(git diff --name-status origin/$GITHUB_BASE_REF HEAD -- cypress/e2e | grep -E '^[AM]' | cut -f2)
           TESTS_PATHS=$(echo "$ADDED_MODIFIED_TESTS" | tr "\n" "," | sed 's/.$//')
-          echo "test_paths=$TESTS_PATHS" >> "$GITHUB_ENV"
-      
+          echo "test_paths=$TESTS_PATHS" >> $GITHUB_OUTPUT
+          echo "$TESTS_PATHS"
 
-      - name: Print modified files
-        id: asdf
-        run: |
-          echo $test_paths
-          echo Dupa
-          echo ${{ env.test_paths }}
-    
-      - name: Run Modified Tests
-        uses: cypress-io/github-action@v5
-        with:
-          spec: ${{ env.test_paths }}
+  run-cypress:
+    needs: modified
+    uses: ./.github/workflows/reusable.yml
+    with:
+      spec-path: ${{needs.modified.outputs.specs}}
+    secrets: inherit
